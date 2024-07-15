@@ -8,8 +8,8 @@ async function main() {
   if (network.name === "hardhat") {
     console.warn(
       "You are trying to deploy a contract to the Hardhat Network, which" +
-        "gets automatically created and destroyed every time. Use the Hardhat" +
-        " option '--network localhost'"
+      "gets automatically created and destroyed every time. Use the Hardhat" +
+      " option '--network localhost'"
     );
   }
 
@@ -22,14 +22,14 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
+  const HelloWorld = await ethers.getContractFactory("HelloWorld");
+  const ins = await HelloWorld.deploy("hello world!");
+  await ins.deployed();
 
-  console.log("Token address:", token.address);
+  console.log("Token address:", ins.address);
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(token);
+  saveFrontendFiles(ins);
 }
 
 function saveFrontendFiles(token) {
@@ -48,13 +48,13 @@ function saveFrontendFiles(token) {
 
   fs.writeFileSync(
     path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    JSON.stringify({ HelloWorld: token.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  const TokenArtifact = artifacts.readArtifactSync("HelloWorld");
 
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
+    path.join(contractsDir, "HelloWorld.json"),
     JSON.stringify(TokenArtifact, null, 2)
   );
 }
