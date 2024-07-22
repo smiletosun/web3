@@ -3,13 +3,21 @@
 
 const path = require("path");
 
+async function deploySol(name, opt) {
+  const contract = await ethers.getContractFactory(name);
+  const ins = await contract.deploy(opt ?? null);
+  await ins.deployed();
+  console.log(`contract ${name} deployed at address: ${ins.address}`);
+  return ins;
+}
+
 async function main() {
   // This is just a convenience check
   if (network.name === "hardhat") {
     console.warn(
       "You are trying to deploy a contract to the Hardhat Network, which" +
-      "gets automatically created and destroyed every time. Use the Hardhat" +
-      " option '--network localhost'"
+        "gets automatically created and destroyed every time. Use the Hardhat" +
+        " option '--network localhost'"
     );
   }
 
@@ -20,19 +28,15 @@ async function main() {
     await deployer.getAddress()
   );
 
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  const tokenNames = [["HelloWorld", "hello-world"], ["OnlyOwner"]];
 
-  const HelloWorld = await ethers.getContractFactory("HelloWorld");
-  const ins = await HelloWorld.deploy("hello world!");
-  await ins.deployed();
-
-  console.log("Token address:", ins.address);
-
-  // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(ins);
+  for (const [name, opt] of tokenNames) {
+    const ins = await deploySol(name, opt);
+    await saveFrontendFiles(name, ins);
+  }
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(contractName, token) {
   const fs = require("fs");
   const contractsDir = path.join(
     __dirname,
@@ -47,14 +51,14 @@ function saveFrontendFiles(token) {
   }
 
   fs.writeFileSync(
-    path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ HelloWorld: token.address }, undefined, 2)
+    path.join(contractsDir, `contract-${contractName}-address.json`),
+    JSON.stringify({ [contractName]: token.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("HelloWorld");
+  const TokenArtifact = artifacts.readArtifactSync(contractName);
 
   fs.writeFileSync(
-    path.join(contractsDir, "HelloWorld.json"),
+    path.join(contractsDir, `${contractName}.json`),
     JSON.stringify(TokenArtifact, null, 2)
   );
 }

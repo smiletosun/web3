@@ -11,9 +11,11 @@ contract HelloWorld {
     event UpdateMessage(string oldMessage, string newMessage);
 
     string public message;
+    address public owner;
 
     constructor(string memory initialMessage) {
         message = initialMessage;
+        owner = msg.sender;
     }
 
     function update(string memory newMessage) public {
@@ -23,5 +25,9 @@ contract HelloWorld {
 
     function get() public view returns (string memory) {
         return message;
+    }
+
+    function getOwner() public view returns (address) {
+        return owner;
     }
 }
