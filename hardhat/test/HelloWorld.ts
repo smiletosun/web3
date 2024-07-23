@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { deployTokenFixture } from "./utils.mjs";
+import { deployTokenFixture } from "./utils.js";
+import { describe } from "mocha";
 
 const CONTRACT_NAME = "HelloWorld";
 

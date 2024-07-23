@@ -1,10 +1,14 @@
-// This is a script for deploying your contracts. You can adapt it to deploy
-// yours, or create new ones.
+import hre, { artifacts } from "hardhat";
+import path from "path";
 
-const path = require("path");
+const CONTRACT_NAMES = [
+  ["HelloWorld", "hello-world"],
+  ["OnlyOwner"],
+  ["MyCoin"],
+] as const;
 
-async function deploySol(name, opt) {
-  const contract = await ethers.getContractFactory(name);
+async function deploySol(name: string, opt: any) {
+  const contract = await hre.ethers.getContractFactory(name);
   const ins = await contract.deploy(opt ?? null);
   await ins.deployed();
   console.log(`contract ${name} deployed at address: ${ins.address}`);
@@ -13,7 +17,7 @@ async function deploySol(name, opt) {
 
 async function main() {
   // This is just a convenience check
-  if (network.name === "hardhat") {
+  if (hre.network.name === "hardhat") {
     console.warn(
       "You are trying to deploy a contract to the Hardhat Network, which" +
         "gets automatically created and destroyed every time. Use the Hardhat" +
@@ -22,21 +26,19 @@ async function main() {
   }
 
   // ethers is available in the global scope
-  const [deployer] = await ethers.getSigners();
+  const [deployer] = await hre.ethers.getSigners();
   console.log(
     "Deploying the contracts with the account:",
     await deployer.getAddress()
   );
 
-  const tokenNames = [["HelloWorld", "hello-world"], ["OnlyOwner"]];
-
-  for (const [name, opt] of tokenNames) {
+  for (const [name, opt] of CONTRACT_NAMES) {
     const ins = await deploySol(name, opt);
     await saveFrontendFiles(name, ins);
   }
 }
 
-function saveFrontendFiles(contractName, token) {
+function saveFrontendFiles(contractName: string, token: any) {
   const fs = require("fs");
   const contractsDir = path.join(
     __dirname,
@@ -51,7 +53,7 @@ function saveFrontendFiles(contractName, token) {
   }
 
   fs.writeFileSync(
-    path.join(contractsDir, `contract-${contractName}-address.json`),
+    path.join(contractsDir, `contract-address.json`),
     JSON.stringify({ [contractName]: token.address }, undefined, 2)
   );
 
