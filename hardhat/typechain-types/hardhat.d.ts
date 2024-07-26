@@ -69,6 +69,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Strings__factory>;
     getContractFactory(
+      name: "Ballout",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ballout__factory>;
+    getContractFactory(
       name: "HelloWorld",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.HelloWorld__factory>;
@@ -80,10 +84,6 @@ declare module "hardhat/types/runtime" {
       name: "MyNFT",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MyNFT__factory>;
-    getContractFactory(
-      name: "RaiE",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.RaiE__factory>;
     getContractFactory(
       name: "OnlyOwner",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -160,6 +160,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Strings>;
     getContractAt(
+      name: "Ballout",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ballout>;
+    getContractAt(
       name: "HelloWorld",
       address: string,
       signer?: ethers.Signer
@@ -174,11 +179,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MyNFT>;
-    getContractAt(
-      name: "RaiE",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.RaiE>;
     getContractAt(
       name: "OnlyOwner",
       address: string,
