@@ -5,6 +5,7 @@ const CONTRACT_NAMES = [
   ["HelloWorld", "hello-world"],
   ["OnlyOwner"],
   ["MyCoin"],
+  ["MyNFT"],
 ] as const;
 
 async function deploySol(name: string, opt: any) {

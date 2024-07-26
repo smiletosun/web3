@@ -1,16 +1,15 @@
 import { expect } from "chai";
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { deployTokenFixture } from "./utils.js";
+import { deployTokenFixture } from "./utils";
 import { describe } from "mocha";
 
 const CONTRACT_NAME = "HelloWorld";
 
-const init = () => deployTokenFixture(CONTRACT_NAME, "hello world");
-
 describe("Hello world contract", function () {
-  describe("Deployment", function () {
+  const init = () => deployTokenFixture(CONTRACT_NAME, "hello world");
+
+  describe("deploy", function () {
     it("Should set the right owner", async function () {
-      const { contractIns, owner } = await loadFixture(init);
+      const { contractIns, owner } = await init();
       expect(await contractIns.getOwner()).to.equal(owner.address);
       expect(await contractIns.get()).to.equal("hello world");
     });
@@ -18,7 +17,7 @@ describe("Hello world contract", function () {
 
   describe("update message", function () {
     it("Should update the message", async function () {
-      const { contractIns, owner } = await loadFixture(init);
+      const { contractIns, owner } = await init();
       expect(await contractIns.get()).to.equal("hello world");
       await contractIns.update("hello world2");
       expect(await contractIns.get()).to.equal("hello world2");

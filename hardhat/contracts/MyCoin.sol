@@ -1,18 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 
-import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract MyCoin is ERC721 {
-    uint256 private totalSupply;
-
-    constructor() ERC721("MyCoin", "MYC") {
-        totalSupply++;
+contract MyCoin is ERC20("coin", "RAIC") {
+    constructor(uint256 initialValue) {
+        require(initialValue > 999, "Initial supply must be greater than 999.");
+        _mint(msg.sender, initialValue);
     }
 
-    function mint() external returns (uint256) {
-        totalSupply++;
-        _safeMint(msg.sender, totalSupply);
-        return totalSupply;
+    function decimals() public view virtual override returns (uint8) {
+        return 2;
     }
 }
