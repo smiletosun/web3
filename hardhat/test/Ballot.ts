@@ -6,18 +6,24 @@ import hardhat from "hardhat";
 const CONTRACT_NAME = "Ballout";
 
 describe("Ballout contract", function () {
-  // const init = () => deployTokenFixture(CONTRACT_NAME, names);
+  const names = ["alice", "bob", "charlie", "dave", "eve"];
+  const init = () => deployTokenFixture(CONTRACT_NAME, names);
 
   describe("set vote", function () {
-    it("Should set the right owner", async function () {
-      const names = ["alice", "bob", "charlie", "dave", "eve"];
+    it("can vote", async function () {
+      hardhat.artifacts.readArtifact(CONTRACT_NAME);
+      const { contractIns, otherAddress, createContract } = await init();
 
-      const contract = await hardhat.ethers.getContractFactory(CONTRACT_NAME);
-      const [owner, addr1, addr2] = await hardhat.ethers.getSigners();
-      const contractIns = await contract.deploy(names);
-      await contractIns.deployed();
+      for await (let item of otherAddress) {
+        await contractIns.giveRightToVote(item.address);
+        const ins = await createContract(item);
+        const tx = await ins.vote(4);
+        await tx.wait();
+        console.log(await contractIns.getAllProposals());
+      }
 
-      // const { contractIns, owner, otherAddress } = await init();
+      expect(await contractIns.winnerName()).to.equal(names[4]);
     });
   });
 });
+``;

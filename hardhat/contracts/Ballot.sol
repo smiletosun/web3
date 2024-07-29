@@ -24,13 +24,14 @@ contract Ballout {
         voters[chariman].weight = 1;
 
         for (uint i = 0; i < proposalNames.length; i++) {
-            proposals[i] = Proposal(proposalNames[i], 0);
+            proposals.push(Proposal(proposalNames[i], 0));
         }
     }
 
     function vote(uint proposal) external {
         Voter storage voter = voters[msg.sender];
         require(!voter.voted, unicode"已经投票了");
+        require(proposal < proposals.length, unicode"没有这个提案");
         voter.voted = true;
         voter.vote = proposal;
         proposals[proposal].voteCount += voter.weight;
@@ -60,7 +61,11 @@ contract Ballout {
         return proposals[winningProposal()].name;
     }
 
-    function getUser() public view returns (Voter memory) {
-        return voters[msg.sender];
+    function getUser(address user) public view returns (Voter memory) {
+        return voters[user];
+    }
+
+    function getAllProposals() public view returns (Proposal[] memory) {
+        return proposals;
     }
 }

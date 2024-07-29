@@ -9,9 +9,16 @@ export async function deployTokenFixture(contractName: string, ...args: any[]) {
   await contractIns.deployed();
   console.log(`Deployed ${contractName} to ${contractIns.address}`);
 
+  const createContract = async (singer: any) => {
+    const { abi } = await hre.artifacts.readArtifact(contractName);
+    console.log("【address】-15-「utils」", contractIns.address);
+    return new ethers.Contract(contractIns.address, abi, singer);
+  };
+
   return {
     owner,
     contractIns,
     otherAddress: [addr1, addr2],
+    createContract,
   } as const;
 }

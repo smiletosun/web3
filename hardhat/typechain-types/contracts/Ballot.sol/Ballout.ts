@@ -24,6 +24,16 @@ import type {
 } from "../../common";
 
 export declare namespace Ballout {
+  export type ProposalStruct = {
+    name: PromiseOrValue<string>;
+    voteCount: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ProposalStructOutput = [string, BigNumber] & {
+    name: string;
+    voteCount: BigNumber;
+  };
+
   export type VoterStruct = {
     weight: PromiseOrValue<BigNumberish>;
     voted: PromiseOrValue<boolean>;
@@ -39,7 +49,8 @@ export declare namespace Ballout {
 
 export interface BalloutInterface extends utils.Interface {
   functions: {
-    "getUser()": FunctionFragment;
+    "getAllProposals()": FunctionFragment;
+    "getUser(address)": FunctionFragment;
     "giveRightToVote(address)": FunctionFragment;
     "proposals(uint256)": FunctionFragment;
     "vote(uint256)": FunctionFragment;
@@ -48,6 +59,7 @@ export interface BalloutInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "getAllProposals"
       | "getUser"
       | "giveRightToVote"
       | "proposals"
@@ -55,7 +67,14 @@ export interface BalloutInterface extends utils.Interface {
       | "winnerName"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "getUser", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getAllProposals",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUser",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "giveRightToVote",
     values: [PromiseOrValue<string>]
@@ -73,6 +92,10 @@ export interface BalloutInterface extends utils.Interface {
     values?: undefined
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "getAllProposals",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "giveRightToVote",
@@ -112,7 +135,14 @@ export interface Ballout extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getUser(overrides?: CallOverrides): Promise<[Ballout.VoterStructOutput]>;
+    getAllProposals(
+      overrides?: CallOverrides
+    ): Promise<[Ballout.ProposalStructOutput[]]>;
+
+    getUser(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[Ballout.VoterStructOutput]>;
 
     giveRightToVote(
       _voter: PromiseOrValue<string>,
@@ -132,7 +162,14 @@ export interface Ballout extends BaseContract {
     winnerName(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  getUser(overrides?: CallOverrides): Promise<Ballout.VoterStructOutput>;
+  getAllProposals(
+    overrides?: CallOverrides
+  ): Promise<Ballout.ProposalStructOutput[]>;
+
+  getUser(
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<Ballout.VoterStructOutput>;
 
   giveRightToVote(
     _voter: PromiseOrValue<string>,
@@ -152,7 +189,14 @@ export interface Ballout extends BaseContract {
   winnerName(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    getUser(overrides?: CallOverrides): Promise<Ballout.VoterStructOutput>;
+    getAllProposals(
+      overrides?: CallOverrides
+    ): Promise<Ballout.ProposalStructOutput[]>;
+
+    getUser(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<Ballout.VoterStructOutput>;
 
     giveRightToVote(
       _voter: PromiseOrValue<string>,
@@ -175,7 +219,12 @@ export interface Ballout extends BaseContract {
   filters: {};
 
   estimateGas: {
-    getUser(overrides?: CallOverrides): Promise<BigNumber>;
+    getAllProposals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUser(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     giveRightToVote(
       _voter: PromiseOrValue<string>,
@@ -196,7 +245,12 @@ export interface Ballout extends BaseContract {
   };
 
   populateTransaction: {
-    getUser(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAllProposals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getUser(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     giveRightToVote(
       _voter: PromiseOrValue<string>,

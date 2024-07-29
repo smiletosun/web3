@@ -4,8 +4,9 @@ import path from "path";
 const CONTRACT_NAMES = [
   ["HelloWorld", "hello-world"],
   ["OnlyOwner"],
-  ["MyCoin"],
+  ["MyCoin", 1000000],
   ["MyNFT"],
+  ["Ballout", ["alice", "bob", "charlie"]],
 ] as const;
 
 async function deploySol(name: string, opt: any) {
@@ -53,9 +54,23 @@ function saveFrontendFiles(contractName: string, token: any) {
     fs.mkdirSync(contractsDir);
   }
 
+  let obj = { [contractName]: token.address };
+
+  if (fs.existsSync(path.join(contractsDir, `contract-address.json`))) {
+    const contractAddressJson = fs.readFileSync(
+      path.join(contractsDir, `contract-address.json`)
+    );
+    if (contractAddressJson) {
+      obj = {
+        ...JSON.parse(contractAddressJson),
+        ...obj,
+      };
+    }
+  }
+
   fs.writeFileSync(
     path.join(contractsDir, `contract-address.json`),
-    JSON.stringify({ [contractName]: token.address }, undefined, 2)
+    JSON.stringify(obj, undefined, 2)
   );
 
   const TokenArtifact = artifacts.readArtifactSync(contractName);
