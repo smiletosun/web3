@@ -7,3 +7,4 @@ export type { HelloWorld } from "./HelloWorld";
 export type { MyCoin } from "./MyCoin";
 export type { MyNFT } from "./MyNFT";
 export type { OnlyOwner } from "./OnlyOwner";
+export type { Test } from "./Test";

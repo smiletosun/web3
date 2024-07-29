@@ -88,6 +88,10 @@ declare module "hardhat/types/runtime" {
       name: "OnlyOwner",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OnlyOwner__factory>;
+    getContractFactory(
+      name: "Test",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Test__factory>;
 
     getContractAt(
       name: "IERC1155Errors",
@@ -184,6 +188,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OnlyOwner>;
+    getContractAt(
+      name: "Test",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Test>;
 
     // default types
     getContractFactory(

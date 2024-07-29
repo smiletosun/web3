@@ -19,7 +19,6 @@ describe("Ballout contract", function () {
         const ins = await createContract(item);
         const tx = await ins.vote(4);
         await tx.wait();
-        console.log(await contractIns.getAllProposals());
       }
 
       expect(await contractIns.winnerName()).to.equal(names[4]);

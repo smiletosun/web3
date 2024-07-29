@@ -44,3 +44,5 @@ export type { MyNFT } from "./contracts/MyNFT";
 export { MyNFT__factory } from "./factories/contracts/MyNFT__factory";
 export type { OnlyOwner } from "./contracts/OnlyOwner";
 export { OnlyOwner__factory } from "./factories/contracts/OnlyOwner__factory";
+export type { Test } from "./contracts/Test";
+export { Test__factory } from "./factories/contracts/Test__factory";

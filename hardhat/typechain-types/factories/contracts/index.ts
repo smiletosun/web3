@@ -6,3 +6,4 @@ export { HelloWorld__factory } from "./HelloWorld__factory";
 export { MyCoin__factory } from "./MyCoin__factory";
 export { MyNFT__factory } from "./MyNFT__factory";
 export { OnlyOwner__factory } from "./OnlyOwner__factory";
+export { Test__factory } from "./Test__factory";
