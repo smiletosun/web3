@@ -32,4 +32,27 @@ describe("Test contract", function () {
       expect(error.errorName).to.equal("Panic");
     });
   });
+
+  it("test function modifier", async () => {
+    const init = () => deployTokenFixture(CONTRACT_NAME);
+    const { createContract, otherAddress } = await init();
+
+    const newContract = await createContract(otherAddress[1]);
+
+    await newContract
+      .testModifier(otherAddress[1].address)
+      .catch((error: any) => {
+        // console.log("【error】-41-「Test」", error);
+      });
+  });
+
+  it("test sendEnth", async () => {
+    const init = () => deployTokenFixture(CONTRACT_NAME);
+    const { contractIns, createContract, otherAddress } = await init();
+    const newContract = await createContract(otherAddress[1]);
+    const txResponse = await newContract.sendEnth(contractIns.address);
+    const receipt = await txResponse.wait();
+    console.log(await receipt.events[0].args);
+    expect(receipt.status).to.equal(1);
+  });
 });

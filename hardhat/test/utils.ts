@@ -11,7 +11,6 @@ export async function deployTokenFixture(contractName: string, ...args: any[]) {
 
   const createContract = async (singer: any) => {
     const { abi } = await hre.artifacts.readArtifact(contractName);
-    console.log("【address】-15-「utils」", contractIns.address);
     return new ethers.Contract(contractIns.address, abi, singer);
   };
 

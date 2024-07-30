@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as ballotSol from "./Ballot.sol";
+export * as eventSol from "./Event.sol";
 export { HelloWorld__factory } from "./HelloWorld__factory";
 export { MyCoin__factory } from "./MyCoin__factory";
 export { MyNFT__factory } from "./MyNFT__factory";

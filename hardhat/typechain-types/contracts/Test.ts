@@ -7,11 +7,17 @@ import type {
   BigNumberish,
   BytesLike,
   CallOverrides,
+  ContractTransaction,
+  Overrides,
   PopulatedTransaction,
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -24,19 +30,38 @@ import type {
 export interface TestInterface extends utils.Interface {
   functions: {
     "num()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "sendEnth(address)": FunctionFragment;
     "testAssert()": FunctionFragment;
+    "testModifier(address)": FunctionFragment;
     "testRequire(uint256)": FunctionFragment;
     "testRevert(uint256)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "num" | "testAssert" | "testRequire" | "testRevert"
+    nameOrSignatureOrTopic:
+      | "num"
+      | "owner"
+      | "sendEnth"
+      | "testAssert"
+      | "testModifier"
+      | "testRequire"
+      | "testRevert"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "num", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "sendEnth",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "testAssert",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "testModifier",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "testRequire",
@@ -48,15 +73,51 @@ export interface TestInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "num", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "sendEnth", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "testAssert", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "testModifier",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "testRequire",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "testRevert", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "Log(address,string)": EventFragment;
+    "OtherLog()": EventFragment;
+    "TLog(address,bool,bytes)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "Log"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OtherLog"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TLog"): EventFragment;
 }
+
+export interface LogEventObject {
+  sender: string;
+  message: string;
+}
+export type LogEvent = TypedEvent<[string, string], LogEventObject>;
+
+export type LogEventFilter = TypedEventFilter<LogEvent>;
+
+export interface OtherLogEventObject {}
+export type OtherLogEvent = TypedEvent<[], OtherLogEventObject>;
+
+export type OtherLogEventFilter = TypedEventFilter<OtherLogEvent>;
+
+export interface TLogEventObject {
+  sender: string;
+  sent: boolean;
+  message: string;
+}
+export type TLogEvent = TypedEvent<[string, boolean, string], TLogEventObject>;
+
+export type TLogEventFilter = TypedEventFilter<TLogEvent>;
 
 export interface Test extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -87,7 +148,19 @@ export interface Test extends BaseContract {
   functions: {
     num(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    sendEnth(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     testAssert(overrides?: CallOverrides): Promise<[void]>;
+
+    testModifier(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     testRequire(
       _i: PromiseOrValue<BigNumberish>,
@@ -102,7 +175,19 @@ export interface Test extends BaseContract {
 
   num(overrides?: CallOverrides): Promise<BigNumber>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  sendEnth(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   testAssert(overrides?: CallOverrides): Promise<void>;
+
+  testModifier(
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   testRequire(
     _i: PromiseOrValue<BigNumberish>,
@@ -117,7 +202,19 @@ export interface Test extends BaseContract {
   callStatic: {
     num(overrides?: CallOverrides): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    sendEnth(
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     testAssert(overrides?: CallOverrides): Promise<void>;
+
+    testModifier(
+      _addr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     testRequire(
       _i: PromiseOrValue<BigNumberish>,
@@ -130,12 +227,37 @@ export interface Test extends BaseContract {
     ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "Log(address,string)"(sender?: null, message?: null): LogEventFilter;
+    Log(sender?: null, message?: null): LogEventFilter;
+
+    "OtherLog()"(): OtherLogEventFilter;
+    OtherLog(): OtherLogEventFilter;
+
+    "TLog(address,bool,bytes)"(
+      sender?: null,
+      sent?: null,
+      message?: null
+    ): TLogEventFilter;
+    TLog(sender?: null, sent?: null, message?: null): TLogEventFilter;
+  };
 
   estimateGas: {
     num(overrides?: CallOverrides): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    sendEnth(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     testAssert(overrides?: CallOverrides): Promise<BigNumber>;
+
+    testModifier(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     testRequire(
       _i: PromiseOrValue<BigNumberish>,
@@ -151,7 +273,19 @@ export interface Test extends BaseContract {
   populateTransaction: {
     num(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    sendEnth(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     testAssert(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    testModifier(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     testRequire(
       _i: PromiseOrValue<BigNumberish>,
