@@ -3,7 +3,6 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./UniswapFactory.sol";
 
-
 /**
  * @title UniswapExchange
  * @notice Uniswap style exchange
@@ -32,7 +31,7 @@ contract UniswapExchange {
     );
 
     /// CONSTANTS
-    uint256 public constant FEE_RATE = 500;        //fee = 1/feeRate = 0.2%
+    uint256 public constant FEE_RATE = 500; //fee = 1/feeRate = 0.2%
 
     /// STORAGE
     uint256 public ethPool;
@@ -63,30 +62,24 @@ contract UniswapExchange {
     }
 
     /// RECEIVE FUNCTION
-    receive() external virtual payable {
-        require(
-            msg.value != 0,
-            "Need to send some ether."
-        );
-        ethToToken(
-            msg.sender,
-            msg.sender,
-            msg.value,
-            1
-        );
+    receive() external payable virtual {
+        require(msg.value != 0, "Need to send some ether.");
+        ethToToken(msg.sender, msg.sender, msg.value, 1);
     }
 
     /// EXTERNAL FUNCTIONS
     /// @notice Initializes the exchange
     /// @param _tokenAmount the number of tokens to initialize the exchange with
-    function initializeExchange(uint256 _tokenAmount) external virtual payable {
+    function initializeExchange(uint256 _tokenAmount) external payable virtual {
         require(
             invariant == 0 && totalShares == 0,
             "Invariant or totalShares != 0"
         );
         // Prevents share cost from being too high or too low - potentially needs work
         require(
-            msg.value >= 10000 && _tokenAmount >= 10000 && msg.value <= 5*10**18,
+            msg.value >= 10000 &&
+                _tokenAmount >= 10000 &&
+                msg.value <= 5 * 10 ** 18,
             "Share cost not in range."
         );
         ethPool = msg.value;
@@ -103,22 +96,13 @@ contract UniswapExchange {
     function ethToTokenSwap(
         uint256 _minTokens,
         uint256 _timeout
-    )
-        external
-        virtual
-        payable
-    {
+    ) external payable virtual {
         require(
             // solium-disable-next-line security/no-block-members
             msg.value > 0 && _minTokens > 0 && now < _timeout,
             "Invalid ethToTokenSwap parameters"
         );
-        ethToToken(
-            msg.sender,
-            msg.sender,
-            msg.value,
-            _minTokens
-        );
+        ethToToken(msg.sender, msg.sender, msg.value, _minTokens);
     }
 
     /// @notice Payer pays in ETH, recipient receives Tokens
@@ -129,11 +113,7 @@ contract UniswapExchange {
         uint256 _minTokens,
         uint256 _timeout,
         address _recipient
-    )
-        external
-        virtual
-        payable
-    {
+    ) external payable virtual {
         require(
             // solium-disable-next-line security/no-block-members
             msg.value > 0 && _minTokens > 0 && now < _timeout,
@@ -143,12 +123,7 @@ contract UniswapExchange {
             _recipient != address(0) && _recipient != address(this),
             "Invalid ethToTokenPayment recipient."
         );
-        ethToToken(
-            msg.sender,
-            _recipient,
-            msg.value,
-            _minTokens
-        );
+        ethToToken(msg.sender, _recipient, msg.value, _minTokens);
     }
 
     /// @notice Buyer swaps Tokens for ETH
@@ -159,21 +134,13 @@ contract UniswapExchange {
         uint256 _tokenAmount,
         uint256 _minEth,
         uint256 _timeout
-    )
-        external
-        virtual
-    {
+    ) external virtual {
         require(
             // solium-disable-next-line security/no-block-members
             _tokenAmount > 0 && _minEth > 0 && now < _timeout,
             "Invalid tokenToEthSwap parameters."
         );
-        tokenToEth(
-            msg.sender,
-            msg.sender,
-            _tokenAmount,
-            _minEth
-        );
+        tokenToEth(msg.sender, msg.sender, _tokenAmount, _minEth);
     }
 
     /// @notice Payer pays in Tokens, recipient receives ETH
@@ -186,10 +153,7 @@ contract UniswapExchange {
         uint256 _minEth,
         uint256 _timeout,
         address payable _recipient
-    )
-        external
-        virtual
-    {
+    ) external virtual {
         require(
             // solium-disable-next-line security/no-block-members
             _tokenAmount > 0 && _minEth > 0 && now < _timeout,
@@ -199,12 +163,7 @@ contract UniswapExchange {
             _recipient != address(0) && _recipient != address(this),
             "Invalid tokenToEthPayment recipient."
         );
-        tokenToEth(
-            msg.sender,
-            _recipient,
-            _tokenAmount,
-            _minEth
-        );
+        tokenToEth(msg.sender, _recipient, _tokenAmount, _minEth);
     }
 
     /// @notice Buyer swaps Tokens in current exchange for Tokens of provided address
@@ -213,14 +172,11 @@ contract UniswapExchange {
     /// @param _minTokensReceived The minimum amount of tokens to be recieved
     /// @param _timeout Timeout period before call fails
     function tokenToTokenSwap(
-        address _tokenPurchased,                  // Must be a token with an attached Uniswap exchange
+        address _tokenPurchased, // Must be a token with an attached Uniswap exchange
         uint256 _tokensSold,
         uint256 _minTokensReceived,
         uint256 _timeout
-    )
-        external
-        virtual
-    {
+    ) external virtual {
         require(
             // solium-disable-next-line security/no-block-members
             _tokensSold > 0 && _minTokensReceived > 0 && now < _timeout,
@@ -247,10 +203,7 @@ contract UniswapExchange {
         uint256 _tokensSold,
         uint256 _minTokensReceived,
         uint256 _timeout
-    )
-        external
-        virtual
-    {
+    ) external virtual {
         require(
             // solium-disable-next-line security/no-block-members
             _tokensSold > 0 && _minTokensReceived > 0 && now < _timeout,
@@ -273,27 +226,11 @@ contract UniswapExchange {
     function tokenToTokenIn(
         address _recipient,
         uint256 _minTokens
-    )
-        external
-        virtual
-        payable
-        returns (bool)
-    {
-        require(
-            msg.value > 0,
-            "Not enough ether sent."
-        );
+    ) external payable virtual returns (bool) {
+        require(msg.value > 0, "Not enough ether sent.");
         address exchangeToken = factory.exchangeToTokenLookup(msg.sender);
-        require(
-            exchangeToken != address(0),
-            "Invalid Exchange."
-        );   // Only a Uniswap exchange can call this function
-        ethToToken(
-            msg.sender,
-            _recipient,
-            msg.value,
-            _minTokens
-        );
+        require(exchangeToken != address(0), "Invalid Exchange."); // Only a Uniswap exchange can call this function
+        ethToToken(msg.sender, _recipient, msg.value, _minTokens);
         return true;
     }
 
@@ -301,26 +238,15 @@ contract UniswapExchange {
     /// @param _minShares The minimum amount of shares to be issued
     function investLiquidity(
         uint256 _minShares
-    )
-        external
-        virtual
-        payable
-        exchangeInitialized
-    {
+    ) external payable virtual exchangeInitialized {
         require(
             msg.value > 0 && _minShares > 0,
             "Invalid investLiquidity parameters."
         );
         uint256 ethPerShare = ethPool.div(totalShares);
-        require(
-            msg.value >= ethPerShare,
-            "Not enough ether sent."
-        );
+        require(msg.value >= ethPerShare, "Not enough ether sent.");
         uint256 sharesPurchased = msg.value.div(ethPerShare);
-        require(
-            sharesPurchased >= _minShares,
-            "Not enough shares purchased"
-        );
+        require(sharesPurchased >= _minShares, "Not enough shares purchased");
         uint256 tokensPerShare = tokenPool.div(totalShares);
         uint256 tokensRequired = sharesPurchased.mul(tokensPerShare);
         shares[msg.sender] = shares[msg.sender].add(sharesPurchased);
@@ -340,14 +266,8 @@ contract UniswapExchange {
         uint256 _sharesBurned,
         uint256 _minEth,
         uint256 _minTokens
-    )
-        external
-        virtual
-    {
-        require(
-            _sharesBurned > 0,
-            "Not enough shares to burn."
-        );
+    ) external virtual {
+        require(_sharesBurned > 0, "Not enough shares to burn.");
         shares[msg.sender] = shares[msg.sender].sub(_sharesBurned);
         uint256 ethPerShare = ethPool.div(totalShares);
         uint256 tokensPerShare = tokenPool.div(totalShares);
@@ -374,12 +294,7 @@ contract UniswapExchange {
     /// @param _provider The address of the shareholder
     function getShares(
         address _provider
-    )
-        external
-        virtual
-        view
-        returns(uint256 _shares)
-    {
+    ) external view virtual returns (uint256 _shares) {
         return shares[_provider];
     }
 
@@ -389,10 +304,7 @@ contract UniswapExchange {
         address recipient,
         uint256 ethIn,
         uint256 minTokensOut
-    )
-        internal
-        exchangeInitialized
-    {
+    ) internal exchangeInitialized {
         uint256 fee = ethIn.div(FEE_RATE);
         uint256 newEthPool = ethPool.add(ethIn);
         uint256 tempEthPool = newEthPool.sub(fee);
@@ -414,10 +326,7 @@ contract UniswapExchange {
         address payable recipient,
         uint256 tokensIn,
         uint256 minEthOut
-    )
-        internal
-        exchangeInitialized
-    {
+    ) internal exchangeInitialized {
         uint256 fee = tokensIn.div(FEE_RATE);
         uint256 newTokenPool = tokenPool.add(tokensIn);
         uint256 tempTokenPool = newTokenPool.sub(fee);
@@ -441,13 +350,11 @@ contract UniswapExchange {
         address recipient,
         uint256 tokensIn,
         uint256 minTokensOut
-    )
-        internal
-        exchangeInitialized
-    {
+    ) internal exchangeInitialized {
         require(
             tokenPurchased != address(0) && tokenPurchased != address(this),
-            "Invalid purchased token address.");
+            "Invalid purchased token address."
+        );
         address payable exchangeAddress = factory.tokenToExchangeLookup(
             tokenPurchased
         );

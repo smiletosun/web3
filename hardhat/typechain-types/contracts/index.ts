@@ -3,6 +3,10 @@
 /* eslint-disable */
 import type * as ballotSol from "./Ballot.sol";
 export type { ballotSol };
+import type * as callSol from "./Call.sol";
+export type { callSol };
+import type * as createSol from "./Create.sol";
+export type { createSol };
 import type * as eventSol from "./Event.sol";
 export type { eventSol };
 export type { HelloWorld } from "./HelloWorld";

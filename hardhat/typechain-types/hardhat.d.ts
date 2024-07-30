@@ -73,6 +73,18 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ballout__factory>;
     getContractFactory(
+      name: "Callee",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Callee__factory>;
+    getContractFactory(
+      name: "Caller",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Caller__factory>;
+    getContractFactory(
+      name: "Car",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Car__factory>;
+    getContractFactory(
       name: "IEventSubscriber",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IEventSubscriber__factory>;
@@ -176,6 +188,21 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Ballout>;
+    getContractAt(
+      name: "Callee",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Callee>;
+    getContractAt(
+      name: "Caller",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Caller>;
+    getContractAt(
+      name: "Car",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Car>;
     getContractAt(
       name: "IEventSubscriber",
       address: string,

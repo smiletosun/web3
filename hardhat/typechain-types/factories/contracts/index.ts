@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as ballotSol from "./Ballot.sol";
+export * as callSol from "./Call.sol";
+export * as createSol from "./Create.sol";
 export * as eventSol from "./Event.sol";
 export { HelloWorld__factory } from "./HelloWorld__factory";
 export { MyCoin__factory } from "./MyCoin__factory";
