@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/utils/EnumerableSet.sol";
 import "./VentureEth.sol";
 import "../voting/Democratic.sol";
 
-
 /**
  * @title DAO
  * @dev The contract inherits from VentureEth.
@@ -20,7 +19,6 @@ import "../voting/Democratic.sol";
  * 7. Claim ether dividends from the DAO on behalf of your DAO tokens.
  */
 contract DAO is VentureEth, Democratic {
-
     using SafeMath for uint256;
     using EnumerableSet for EnumerableSet.AddressSet;
 
@@ -34,9 +32,10 @@ contract DAO is VentureEth, Democratic {
         uint8 decimals,
         uint256 threshold
     )
-    VentureEth(name, symbol, decimals)
-    Democratic(address(this), threshold)
-    public {
+        public
+        VentureEth(name, symbol, decimals)
+        Democratic(address(this), threshold)
+    {
         _createTransition("LIVE", "SETUP");
         _createTransition("FAILED", "SETUP");
     }
@@ -44,7 +43,7 @@ contract DAO is VentureEth, Democratic {
     /**
      * @dev Fallback function. Required when collecting ether dividends from ventures.
      */
-    receive() external virtual override payable {}
+    receive() external payable virtual override {}
 
     /**
      * @notice To be called during the first investment round.
@@ -78,9 +77,7 @@ contract DAO is VentureEth, Democratic {
      * @notice Retrieve tokens minted for the DAO after an investment.
      * @param venture The address of the VentureEth contract to retrieve tokens from.
      */
-    function retrieveVentureTokens(
-        address payable venture
-    ) public virtual {
+    function retrieveVentureTokens(address payable venture) public virtual {
         VentureEth(venture).claim();
     }
 
@@ -101,7 +98,7 @@ contract DAO is VentureEth, Democratic {
      */
     function claimDividendsFromVenture(
         address payable venture
-    ) public virtual returns(uint256) {
+    ) public virtual returns (uint256) {
         return VentureEth(venture).claimDividends();
     }
 
@@ -120,7 +117,9 @@ contract DAO is VentureEth, Democratic {
     /**
      * @notice Hook for proposals to restart investor rounds.
      */
-    function restartInvestorRound(uint256 _issuePrice) public virtual onlyProposal {
+    function restartInvestorRound(
+        uint256 _issuePrice
+    ) public virtual onlyProposal {
         _transition("SETUP");
         this.setIssuePrice(_issuePrice);
         this.startIssuance();
