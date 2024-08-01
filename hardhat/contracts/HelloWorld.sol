@@ -8,10 +8,10 @@ pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 
 contract HelloWorld {
-    event UpdateMessage(string oldMessage, string newMessage);
-
     string public message;
     address public owner;
+
+    event UpdateMessage(string oldMessage, string newMessage);
 
     constructor(string memory initialMessage) {
         message = initialMessage;

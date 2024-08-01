@@ -29,6 +29,11 @@ import type {
 
 export interface TestInterface extends utils.Interface {
   functions: {
+    "callTest(address,string,string)": FunctionFragment;
+    "delegateCallTest(address,string,string)": FunctionFragment;
+    "enCode(uint256)": FunctionFragment;
+    "getMessage()": FunctionFragment;
+    "message()": FunctionFragment;
     "num()": FunctionFragment;
     "owner()": FunctionFragment;
     "sendEnth(address)": FunctionFragment;
@@ -40,6 +45,11 @@ export interface TestInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "callTest"
+      | "delegateCallTest"
+      | "enCode"
+      | "getMessage"
+      | "message"
       | "num"
       | "owner"
       | "sendEnth"
@@ -49,6 +59,31 @@ export interface TestInterface extends utils.Interface {
       | "testRevert"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "callTest",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delegateCallTest",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "enCode",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getMessage",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "message", values?: undefined): string;
   encodeFunctionData(functionFragment: "num", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -72,6 +107,14 @@ export interface TestInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
+  decodeFunctionResult(functionFragment: "callTest", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "delegateCallTest",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "enCode", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getMessage", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "message", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "num", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "sendEnth", data: BytesLike): Result;
@@ -146,6 +189,29 @@ export interface Test extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    callTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    delegateCallTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    enCode(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    getMessage(overrides?: CallOverrides): Promise<[string]>;
+
+    message(overrides?: CallOverrides): Promise<[string]>;
+
     num(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -172,6 +238,29 @@ export interface Test extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
+
+  callTest(
+    target: PromiseOrValue<string>,
+    args: PromiseOrValue<string>,
+    _message: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  delegateCallTest(
+    target: PromiseOrValue<string>,
+    args: PromiseOrValue<string>,
+    _message: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  enCode(
+    a: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  getMessage(overrides?: CallOverrides): Promise<string>;
+
+  message(overrides?: CallOverrides): Promise<string>;
 
   num(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -200,6 +289,29 @@ export interface Test extends BaseContract {
   ): Promise<void>;
 
   callStatic: {
+    callTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    delegateCallTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    enCode(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getMessage(overrides?: CallOverrides): Promise<string>;
+
+    message(overrides?: CallOverrides): Promise<string>;
+
     num(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -243,6 +355,29 @@ export interface Test extends BaseContract {
   };
 
   estimateGas: {
+    callTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    delegateCallTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    enCode(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getMessage(overrides?: CallOverrides): Promise<BigNumber>;
+
+    message(overrides?: CallOverrides): Promise<BigNumber>;
+
     num(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -271,6 +406,29 @@ export interface Test extends BaseContract {
   };
 
   populateTransaction: {
+    callTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    delegateCallTest(
+      target: PromiseOrValue<string>,
+      args: PromiseOrValue<string>,
+      _message: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    enCode(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getMessage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    message(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     num(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;

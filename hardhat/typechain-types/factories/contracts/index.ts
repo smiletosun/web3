@@ -4,9 +4,13 @@
 export * as ballotSol from "./Ballot.sol";
 export * as callSol from "./Call.sol";
 export * as createSol from "./Create.sol";
+export * as deploySol from "./Deploy.sol";
 export * as eventSol from "./Event.sol";
+export * as miniProxySol from "./MiniProxy.sol";
+export * as upgradeSol from "./Upgrade.sol";
 export { HelloWorld__factory } from "./HelloWorld__factory";
 export { MyCoin__factory } from "./MyCoin__factory";
 export { MyNFT__factory } from "./MyNFT__factory";
 export { OnlyOwner__factory } from "./OnlyOwner__factory";
 export { Test__factory } from "./Test__factory";
+export { Wallet__factory } from "./Wallet__factory";

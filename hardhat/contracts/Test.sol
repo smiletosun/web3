@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 
 contract Test {
+    string public message = "Hello, World!";
     uint public num = 1;
     address public owner = msg.sender;
 
@@ -11,6 +12,10 @@ contract Test {
 
     constructor() {
         owner = msg.sender;
+    }
+
+    function getMessage() public view returns (string memory) {
+        return message;
     }
 
     function testRequire(uint256 _i) public pure returns (uint256) {
@@ -48,5 +53,33 @@ contract Test {
         require(to != address(0), "Invalid address");
         (bool sent, bytes memory data) = to.call{value: 1 ether}("ssx");
         emit TLog(msg.sender, sent, data);
+    }
+
+    function enCode(uint a) public view returns (bytes memory) {
+        return abi.encode(a);
+    }
+
+    /**
+     * 需要注意 delegateCall 只是调用代码，但是数据还是在当前合约中，而且数据排列方式需要合约中的数据排列顺序一致
+     */
+
+    function delegateCallTest(
+        address target,
+        string memory args,
+        string memory _message
+    ) external {
+        bytes memory data = abi.encodeWithSignature(args, _message);
+        (bool status, ) = address(target).delegatecall{gas: 1 ether}(data);
+        require(status, "Forwarded call failed.");
+    }
+
+    function callTest(
+        address target,
+        string memory args,
+        string memory _message
+    ) external {
+        bytes memory data = abi.encodeWithSignature(args, _message);
+        (bool isOk, ) = address(target).call{gas: 1 ether}(data);
+        require(isOk, "call failed");
     }
 }

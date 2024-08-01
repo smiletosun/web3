@@ -85,6 +85,22 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Car__factory>;
     getContractFactory(
+      name: "Deploy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Deploy__factory>;
+    getContractFactory(
+      name: "Helper",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Helper__factory>;
+    getContractFactory(
+      name: "TestContract1",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TestContract1__factory>;
+    getContractFactory(
+      name: "TestContract2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TestContract2__factory>;
+    getContractFactory(
       name: "IEventSubscriber",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IEventSubscriber__factory>;
@@ -96,6 +112,10 @@ declare module "hardhat/types/runtime" {
       name: "HelloWorld",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.HelloWorld__factory>;
+    getContractFactory(
+      name: "MinimalProxy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MinimalProxy__factory>;
     getContractFactory(
       name: "MyCoin",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -112,6 +132,34 @@ declare module "hardhat/types/runtime" {
       name: "Test",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Test__factory>;
+    getContractFactory(
+      name: "BuggyProxy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BuggyProxy__factory>;
+    getContractFactory(
+      name: "CounterV1",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CounterV1__factory>;
+    getContractFactory(
+      name: "CounterV2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CounterV2__factory>;
+    getContractFactory(
+      name: "Dev",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Dev__factory>;
+    getContractFactory(
+      name: "Proxy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Proxy__factory>;
+    getContractFactory(
+      name: "ProxyAdmin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ProxyAdmin__factory>;
+    getContractFactory(
+      name: "Wallet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Wallet__factory>;
 
     getContractAt(
       name: "IERC1155Errors",
@@ -204,6 +252,26 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Car>;
     getContractAt(
+      name: "Deploy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Deploy>;
+    getContractAt(
+      name: "Helper",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Helper>;
+    getContractAt(
+      name: "TestContract1",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TestContract1>;
+    getContractAt(
+      name: "TestContract2",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TestContract2>;
+    getContractAt(
       name: "IEventSubscriber",
       address: string,
       signer?: ethers.Signer
@@ -218,6 +286,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.HelloWorld>;
+    getContractAt(
+      name: "MinimalProxy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MinimalProxy>;
     getContractAt(
       name: "MyCoin",
       address: string,
@@ -238,6 +311,41 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Test>;
+    getContractAt(
+      name: "BuggyProxy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BuggyProxy>;
+    getContractAt(
+      name: "CounterV1",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CounterV1>;
+    getContractAt(
+      name: "CounterV2",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CounterV2>;
+    getContractAt(
+      name: "Dev",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Dev>;
+    getContractAt(
+      name: "Proxy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Proxy>;
+    getContractAt(
+      name: "ProxyAdmin",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ProxyAdmin>;
+    getContractAt(
+      name: "Wallet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Wallet>;
 
     // default types
     getContractFactory(
