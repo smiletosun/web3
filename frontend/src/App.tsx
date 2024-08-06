@@ -1,45 +1,76 @@
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Empty, Layout, Nav } from "@douyinfe/semi-ui";
+import { useBatchState } from "./hooks/useBatchState";
+import {
+  IllustrationConstruction,
+  IllustrationConstructionDark,
+} from "@douyinfe/semi-illustrations";
+import { Menus } from "./menus";
+
+const { Header, Sider, Content } = Layout;
+const DefaultKey = Menus[0].itemKey;
 
 function App() {
-  const account = useAccount();
-  const { connectors, connect, status, error } = useConnect();
-  const { disconnect } = useDisconnect();
+  const [state, setState] = useBatchState({
+    selectedKey: DefaultKey,
+  });
+
+  const Component = Menus.find(
+    (item) => item.itemKey === state.selectedKey
+  )?.component;
 
   return (
-    <>
-      <div>
-        <h2>Account</h2>
-
-        <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
-        </div>
-
-        {account.status === "connected" && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
-      </div>
-
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
-    </>
+    <Layout className="w-screen h-screen" style={{ backgroundColor: "white" }}>
+      <Header style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+        <Nav
+          mode="horizontal"
+          footer={
+            <>
+              <ConnectButton />
+            </>
+          }
+        ></Nav>
+      </Header>
+      <Layout>
+        <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+          <Nav
+            selectedKeys={[state.selectedKey]}
+            style={{ maxWidth: 220, height: "100%" }}
+            footer={{ collapseButton: true }}
+            items={Menus}
+            onSelect={(data) => {
+              setState({
+                selectedKey: data?.selectedKeys?.[0] as string,
+              });
+            }}
+          />
+        </Sider>
+        <Content
+          style={{
+            padding: "24px",
+            backgroundColor: "var(--semi-color-bg-0)",
+          }}
+        >
+          {Component ? (
+            <Component />
+          ) : (
+            <Empty
+              image={
+                <IllustrationConstruction style={{ width: 150, height: 150 }} />
+              }
+              darkModeImage={
+                <IllustrationConstructionDark
+                  style={{ width: 150, height: 150 }}
+                />
+              }
+              className="h-screen flex justify-center items-center"
+              title={"功能建设中"}
+              description="当前功能暂未开放，敬请期待。"
+            />
+          )}
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 

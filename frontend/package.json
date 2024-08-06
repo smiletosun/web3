@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.63.1",
+    "@douyinfe/semi-icons-lab": "^2.63.1",
+    "@douyinfe/semi-illustrations": "^2.63.1",
+    "@douyinfe/semi-ui": "^2.63.1",
+    "@rainbow-me/rainbowkit": "^2.1.4",
     "@tanstack/react-query": "5.45.1",
+    "autoprefixer": "^10.4.20",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.7",
     "viem": "latest",
     "wagmi": "latest"
   },
