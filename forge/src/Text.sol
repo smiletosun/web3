@@ -3,18 +3,24 @@ pragma solidity ^0.8.13;
 
 contract Text {
     mapping (address => string[]) articles;
-
     address  owner;
+
+    event AddArticle(address indexed user, string article);
 
     constructor() {
         owner = msg.sender;
     }
 
-    function addAirticle(string memory _name) public {
-        articles[msg.sender].push(_name);
+    function addAirticle(string memory article) public {
+        articles[msg.sender].push(article);
+        emit AddArticle(msg.sender, article);
     }
 
-    function getArticles(address _user) public view returns (string[] memory) {
-        return articles[_user];
+    function getArticles() public view returns (string[] memory) {
+        return articles[msg.sender];
+    }
+
+    function getOwner() public view returns (address) {
+        return owner;
     }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "forge",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "forge test",
+    "clean": "forge clean",
+    "build": "forge build",
+    "deploy:sepolia": "make ENV=.env.qa deploy-qa",
+    "deploy": "make ENV=.env deploy-local"
+  },
+  "author": "smile",
+  "license": "MIT"
+}

@@ -46,10 +46,8 @@ function App() {
           />
         </Sider>
         <Content
-          style={{
-            padding: "24px",
-            backgroundColor: "var(--semi-color-bg-0)",
-          }}
+          className="p-5 w-full overflow-auto"
+          style={{ height: "calc(100vh - 60px)" }}
         >
           {Component ? (
             <Component />
