@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "NODE_ENV=local vite",
+    "qa": "NODE_ENV=qa vite",
     "build": "tsc && vite build",
     "lint": "biome check .",
     "preview": "vite preview"

@@ -11,7 +11,7 @@ contract Text {
         owner = msg.sender;
     }
 
-    function addAirticle(string memory article) public {
+    function addArticle(string memory article) public {
         articles[msg.sender].push(article);
         emit AddArticle(msg.sender, article);
     }

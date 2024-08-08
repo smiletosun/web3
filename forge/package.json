@@ -5,8 +5,9 @@
     "test": "forge test",
     "clean": "forge clean",
     "build": "forge build",
-    "deploy:sepolia": "make ENV=.env.qa deploy-qa",
-    "deploy": "make ENV=.env deploy-local"
+    "gas": "forge test --gas-report",
+    "deploy:qa": "make ENV=.env.qa deploy-qa",
+    "deploy": "make ENV=.env.local deploy-local"
   },
   "author": "smile",
   "license": "MIT"

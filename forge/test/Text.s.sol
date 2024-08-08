@@ -22,9 +22,9 @@ contract CounterScript is Test {
         address a1 = makeAddr("alice");
         address a2 = makeAddr("alice2");
         vm.startPrank(a1);
-        text.addAirticle("Hello World1");
-        text.addAirticle("Hello World2");
-        text.addAirticle("Hello World3");
+        text.addArticle("Hello World1");
+        text.addArticle("Hello World2");
+        text.addArticle("Hello World3");
         string[] memory articles1 = text.getArticles();
         console.log(articles1[0]);
         console.log(articles1[1]);
@@ -33,7 +33,7 @@ contract CounterScript is Test {
         vm.stopPrank();
 
         vm.startPrank(a2);
-        text.addAirticle("Hello World!");
+        text.addArticle("Hello World!");
         string[] memory articles2 = text.getArticles();
         assertEq(articles2[0], "Hello World!");
         vm.stopPrank();

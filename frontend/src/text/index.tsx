@@ -3,8 +3,9 @@ import { useAccount, useReadContract } from "wagmi";
 import Contract from "../contracts";
 import { Transfer } from "./Transfer";
 import { TextContract } from "./Text";
+import { Exchange } from "./Exchange";
 
-export default function Text() {
+export function Text() {
   const account = useAccount();
 
   const articles = useReadContract({
@@ -48,6 +49,8 @@ export default function Text() {
         />
         <Divider className="my-4" />
         <Transfer />
+        <Divider className="my-4" />
+        <Exchange />
       </Card>
 
       <div className="flex-1 h-full overflow-auto">

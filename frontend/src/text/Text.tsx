@@ -1,4 +1,4 @@
-import { Form, Button } from "@douyinfe/semi-ui";
+import { Form, Button, Toast } from "@douyinfe/semi-ui";
 import { useRef } from "react";
 import { useWriteWithReceipt } from "../hooks/useWriteWithReceipt";
 import Contract from "../contracts";
@@ -15,11 +15,12 @@ export function TextContract({ onSuccess }: TextContractProps) {
     await writeContractWithReceipt({
       address: Contract.Text.address,
       abi: Contract.Text.abi,
-      functionName: "addAirticle",
+      functionName: "addArticle",
       args: [val.text],
     });
 
     form.current?.formApi.reset();
+    Toast.success("提交成功");
     onSuccess?.();
   };
 

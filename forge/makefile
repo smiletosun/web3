@@ -7,7 +7,11 @@ ENV ?= .env.local
 include $(ENV)
 
 deploy-local:
-	forge script script/Deploy.s.sol:Deploy --fork-url $(API_URL)  --broadcast
+	cat $(ENV) > .env
+	forge script script/Deploy.s.sol:Deploy --fork-url $(API_URL)  --broadcast -vvvv
+	rm .env
 
 deploy-qa:
-	forge script script/Deploy.s.sol:Deploy --rpc-url $(API_URL)  --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(ETHERSCAN_KEY) -vvvv
+	cat $(ENV) > .env
+	forge script script/Deploy.s.sol:Deploy --rpc-url $(API_URL)  --private-key $(PRIVATE_KEY) --broadcast -vvvv
+	rm .env
