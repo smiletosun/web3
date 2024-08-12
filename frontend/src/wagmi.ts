@@ -5,7 +5,6 @@ import { mainnet, sepolia } from "wagmi/chains";
 let chains: any = [mainnet, sepolia];
 let transports: any = { [mainnet.id]: http(), [sepolia.id]: http() };
 
-console.log("【process.env.NODE_ENV】-9-「wagmi」", process.env.NODE_ENV);
 if (process.env.NODE_ENV === "local") {
   const local = defineChain({
     id: 31337,
