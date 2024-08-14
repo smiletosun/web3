@@ -27,8 +27,7 @@ module sui_move::Nft {
       id: object::new(ctx),
     };
 
-    let sender = tx_context::sender(ctx);
-    transfer::public_transfer(nft, sender);
+    transfer::public_transfer(nft, @sui_move);
   }
 
  public fun nftInfo(nft: &Nft): NftMinted {

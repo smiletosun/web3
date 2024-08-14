@@ -1,6 +1,6 @@
 #[test_only]
-module sui_move::example_test {
-    use sui_move::example::{sword_create};
+module sui_move::sword_test {
+    use sui_move::sword::{sword_create};
 
     #[test]
     fun test_create_sword() {
