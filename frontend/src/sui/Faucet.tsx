@@ -1,6 +1,7 @@
-import { Button, Form, Toast } from "@douyinfe/semi-ui";
+import { Form, Toast } from "@douyinfe/semi-ui";
 import { getFaucetHost, requestSuiFromFaucetV1 } from "@mysten/sui/faucet";
 import { useCurrentAccount } from "@mysten/dapp-kit";
+import { FormButtons } from "../components/FormButtons";
 
 export function Faucet() {
   const account = useCurrentAccount();
@@ -14,17 +15,17 @@ export function Faucet() {
     Toast.success("获取成功");
   };
   return (
-    <Form onSubmit={handleFaucet}>
+    <Form onSubmit={handleFaucet} title="faucet">
+      <h5 className="text-lg text-black">充值</h5>
       <Form.Input
         className="w-1/2"
         field="address"
-        label="输入地址"
-        required
+        label="address"
         initValue={account?.address}
+        placeholder="0x..."
+        rules={[{ required: true, message: "不能为空" }]}
       />
-      <Button htmlType="submit" theme="solid" type="primary">
-        faucet
-      </Button>
+      <FormButtons />
     </Form>
   );
 }

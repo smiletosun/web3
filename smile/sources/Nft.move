@@ -1,4 +1,4 @@
-module sui_move::Nft {
+module smile::Nft {
   use std::string;
 
   public struct Nft has key, store {
@@ -27,7 +27,7 @@ module sui_move::Nft {
       id: object::new(ctx),
     };
 
-    transfer::public_transfer(nft, @sui_move);
+    transfer::public_transfer(nft, @smile);
   }
 
  public fun nftInfo(nft: &Nft): NftMinted {

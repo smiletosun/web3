@@ -1,6 +1,6 @@
 #[test_only]
-module sui_move::nft_test {
-    use sui_move::{Nft};
+module smile::nft_test {
+    use smile::{Nft};
 
     #[test]
     fun test_create_nft() {
