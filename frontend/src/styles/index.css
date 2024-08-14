@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {}
+
+[data-dapp-kit] {
+  --dapp-kit-backgroundColors-primaryButton: var(--semi-color-primary);
+}
