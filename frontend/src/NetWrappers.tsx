@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
+import { merge } from "lodash-es";
 import { config } from "./wagmi";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, lightTheme, Theme } from "@rainbow-me/rainbowkit";
 import { PropsWithChildren } from "react";
 import { SuiClientProvider, WalletProvider } from "@mysten/dapp-kit";
 import { getFullnodeUrl } from "@mysten/sui/client";
@@ -10,11 +11,17 @@ import { NetType } from "./constants";
 const queryClientEvm = new QueryClient();
 const queryClientSui = new QueryClient();
 
+const rainbowTheme: Theme = merge(lightTheme(), {
+  colors: {
+    accentColor: "var(--semi-color-primary)",
+  },
+});
+
 export function EvmWrapper({ children }: PropsWithChildren) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClientEvm}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
+        <RainbowKitProvider theme={rainbowTheme}>{children}</RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

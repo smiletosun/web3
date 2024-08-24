@@ -1,4 +1,4 @@
-module smile::Nft {
+module smile::nft {
   use std::string;
 
   public struct Nft has key, store {

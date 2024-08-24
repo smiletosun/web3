@@ -1,7 +1,7 @@
 import { IconCart, IconText, IconUserGroup } from "@douyinfe/semi-icons";
-import { Text } from "./text";
-import { Nft } from "./nft";
-import { Vote } from "./vote";
+import { Text } from "./evm/text";
+import { Nft } from "./evm/nft";
+import { Vote } from "./evm/vote";
 import { Sui } from "./sui";
 import { NetType } from "./constants";
 

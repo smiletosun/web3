@@ -34,3 +34,4 @@ smile = "0x0"
 # The dev-addresses section allows overwriting named addresses for the `--test`
 # and `--dev` modes.
 # alice = "0xB0B"
+me = "0x6b38206344b538856b7294292c52bf2879c6846695988a85cf87dd15cf1fd40e"

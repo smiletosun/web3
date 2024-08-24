@@ -1,6 +1,6 @@
 #[test_only]
 module smile::nft_test {
-    use smile::{Nft};
+    use smile::{nft};
 
     #[test]
     fun test_create_nft() {

@@ -32,7 +32,13 @@ function App() {
             mode="horizontal"
             footer={
               <>
-                {netType === NetType.Evm && <EvmConnectButton />}
+                {netType === NetType.Evm && (
+                  <EvmConnectButton
+                    accountStatus="avatar"
+                    chainStatus="icon"
+                    showBalance
+                  />
+                )}
                 {netType === NetType.Sui && (
                   <SuiConnectButton
                     connectText="链接钱包"
