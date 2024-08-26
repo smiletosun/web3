@@ -11,7 +11,7 @@ function filterCounter(data?: any) {
 
 export function Sui() {
   const currentAccount = useCurrentAccount();
-  const { data, refetch } = useSuiClientQuery(
+  const { data } = useSuiClientQuery(
     "getOwnedObjects",
     {
       owner: currentAccount?.address as string,
@@ -60,7 +60,7 @@ export function Sui() {
       <Card title="工具">
         <div className="grid grid-cols-2 gap-4">
           <Faucet />
-          <Mint />
+          <Mint dataSource={dataSource} />
         </div>
       </Card>
 

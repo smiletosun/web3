@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { formatGwei, parseEther } from "viem";
 import { useAccount, useConfig } from "wagmi";
 import { getBalance } from "wagmi/actions";
-import { useBatchState } from "../../hooks/useBatchState";
+import { useBatchState } from "@/hooks/useBatchState";
 
 export function Exchange() {
   const config = useConfig();

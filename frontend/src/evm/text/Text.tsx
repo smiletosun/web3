@@ -1,6 +1,6 @@
 import { Form, Button, Toast } from "@douyinfe/semi-ui";
 import { useRef } from "react";
-import { useWriteWithReceipt } from "../../hooks/useWriteWithReceipt";
+import { useWriteWithReceipt } from "@/hooks/useWriteWithReceipt";
 import Contract from "../contracts";
 
 export interface TextContractProps {
