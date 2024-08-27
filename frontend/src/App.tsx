@@ -23,11 +23,8 @@ function App() {
   const Wrapper = netType ? NetWrapperMap[netType] : EvmWrapper;
   return (
     <Wrapper>
-      <Layout
-        className="w-screen h-screen"
-        style={{ backgroundColor: "white" }}
-      >
-        <Header style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+      <Layout className="w-screen h-screen">
+        <Header>
           <Nav
             mode="horizontal"
             footer={
@@ -39,6 +36,7 @@ function App() {
                     showBalance
                   />
                 )}
+
                 {netType === NetType.Sui && (
                   <SuiConnectButton
                     connectText="链接钱包"

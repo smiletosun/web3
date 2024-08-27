@@ -2,7 +2,8 @@ import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 
 export function useAllCoins() {
   const currentAccount = useCurrentAccount();
-  const { data } = useSuiClientQuery(
+
+  const res = useSuiClientQuery(
     "getAllCoins",
     {
       owner: currentAccount?.address as string,
@@ -12,5 +13,5 @@ export function useAllCoins() {
     }
   );
 
-  return data;
+  return res;
 }

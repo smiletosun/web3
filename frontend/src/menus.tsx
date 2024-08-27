@@ -1,11 +1,30 @@
-import { IconCart, IconText, IconUserGroup } from "@douyinfe/semi-icons";
+import {
+  IconCart,
+  IconMoneyExchangeStroked,
+  IconText,
+  IconUserGroup,
+} from "@douyinfe/semi-icons";
 import { Text } from "./evm/text";
 import { Nft } from "./nft";
 import { Vote } from "./evm/vote";
-import { Sui } from "./sui";
+import { Coins, Tools } from "./sui";
 import { NetType } from "./constants";
 
 export const Menus = [
+  {
+    itemKey: "sui-coin",
+    text: "sui coin",
+    component: Coins,
+    icon: <IconMoneyExchangeStroked />,
+    netType: NetType.Sui,
+  },
+  {
+    itemKey: "sui",
+    text: "sui tools",
+    component: Tools,
+    icon: <IconCart />,
+    netType: NetType.Sui,
+  },
   {
     itemKey: "vote",
     text: "投票",
@@ -26,12 +45,5 @@ export const Menus = [
     component: Text,
     icon: <IconText />,
     netType: NetType.Evm,
-  },
-  {
-    itemKey: "sui",
-    text: "SUI",
-    component: Sui,
-    icon: <IconCart />,
-    netType: NetType.Sui,
   },
 ];

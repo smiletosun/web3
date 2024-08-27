@@ -1,4 +1,7 @@
 export const PACKAGE_ID =
-  "0x5c8ce0762de4df438417a59d17cbe7822d5f874cd3d91f580697f78d3ab85b75";
+  "0x4b30f9d1cdfea5cbdedeceeda748b74baabb70fdc565f6763ca44178bd0c9c01";
+
+export const TREASURY =
+  "0x557280993a24d1996f1809fbc2ca0682798a227a3b925166827faf345875476e";
 
 export const CounterType = `${PACKAGE_ID}::counter::Counter`;

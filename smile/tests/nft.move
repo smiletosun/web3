@@ -6,7 +6,7 @@ module smile::nft_test {
     fun test_create_nft() {
         let mut ctx = tx_context::dummy();
 
-        Nft::mintToSender(
+        nft::mintToSender(
           b"Sword".to_string(),
           b"A sword".to_string(),
           b"https://example.com/sword.png".to_string(),
