@@ -9,6 +9,7 @@ import { EvmWrapper, NetWrapperMap } from "./NetWrappers";
 import { ConnectButton as EvmConnectButton } from "@rainbow-me/rainbowkit";
 import { ConnectButton as SuiConnectButton } from "@mysten/dapp-kit";
 import { NetType } from "./constants";
+import { Show } from "./components/Show";
 
 const { Header, Sider, Content } = Layout;
 const DefaultKey = Menus[0].itemKey;
@@ -29,15 +30,15 @@ function App() {
             mode="horizontal"
             footer={
               <>
-                {netType === NetType.Evm && (
+                <Show when={netType === NetType.Evm}>
                   <EvmConnectButton
                     accountStatus="avatar"
                     chainStatus="icon"
                     showBalance
                   />
-                )}
+                </Show>
 
-                {netType === NetType.Sui && (
+                <Show when={netType === NetType.Sui}>
                   <SuiConnectButton
                     connectText="链接钱包"
                     style={{
@@ -45,7 +46,7 @@ function App() {
                       color: "white",
                     }}
                   />
-                )}
+                </Show>
               </>
             }
           ></Nav>

@@ -4,18 +4,18 @@ import { Transaction } from "@mysten/sui/transactions";
 import { PACKAGE_ID, TREASURY } from "./constants";
 import { useAllCoins } from "./hooks/useAllCoins";
 import { Toast, Form, Table, Divider, Modal, Button } from "@douyinfe/semi-ui";
-import {
-  IconCamera,
-  IconDelete,
-  IconDeleteStroked,
-} from "@douyinfe/semi-icons";
+import { IconDelete } from "@douyinfe/semi-icons";
 import { Address } from "@ant-design/web3";
 
 const { Column } = Table;
 
 export function Mint(props: any) {
   return (
-    <Form onSubmit={props.onMint} title="mint sb coin" labelPosition="left">
+    <Form
+      onSubmit={props.onMint}
+      title="mint sb coin"
+      labelPosition={"left" as const}
+    >
       <h5 className="text-lg text-black">mint</h5>
       <Form.InputNumber
         field="amount"

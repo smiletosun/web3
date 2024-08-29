@@ -1,16 +1,32 @@
 import {
   IconCart,
+  IconMark,
   IconMoneyExchangeStroked,
   IconText,
   IconUserGroup,
 } from "@douyinfe/semi-icons";
+
 import { Text } from "./evm/text";
 import { Nft } from "./nft";
 import { Vote } from "./evm/vote";
-import { Coins, Tools } from "./sui";
+import { Coins, Tools, RedPacket, Nft as NftSui } from "./sui";
 import { NetType } from "./constants";
 
 export const Menus = [
+  {
+    itemKey: "sui-nft",
+    text: "sui nft",
+    component: NftSui,
+    icon: <IconMark />,
+    netType: NetType.Sui,
+  },
+  {
+    itemKey: "sui-red-packet",
+    text: "sui red packet",
+    component: RedPacket,
+    icon: <IconMoneyExchangeStroked />,
+    netType: NetType.Sui,
+  },
   {
     itemKey: "sui-coin",
     text: "sui coin",

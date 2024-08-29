@@ -35,6 +35,6 @@ published-version = "1"
 
 [env.local]
 chain-id = "8b5c36ed"
-original-published-id = "0x4b30f9d1cdfea5cbdedeceeda748b74baabb70fdc565f6763ca44178bd0c9c01"
-latest-published-id = "0x4b30f9d1cdfea5cbdedeceeda748b74baabb70fdc565f6763ca44178bd0c9c01"
+original-published-id = "0x71748fdf7c9f873d1e166495e2d691f04aa62f6ab268ef0acd72175558a509ed"
+latest-published-id = "0x71748fdf7c9f873d1e166495e2d691f04aa62f6ab268ef0acd72175558a509ed"
 published-version = "1"
