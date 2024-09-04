@@ -122,6 +122,6 @@ module smile::market {
         ctx: &mut TxContext
     ) {
         let amount = market.payments.remove(ctx.sender());
-        transfer::public_transfer(amount, ctx.sender());
+        transfer::public_transfer(amount, ctx.sender())
     }
 }
