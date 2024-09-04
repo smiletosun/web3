@@ -59,8 +59,13 @@ module smile::freelance {
     ) {
         let sender = ctx.sender();
         assert!(
-            freelance.client == sender || freelance.freelancer == sender,
+            freelance.freelancer == sender,
             ENotFreelancer
+        );
+
+        assert!(
+            freelance.client == sender,
+            ENotClient
         );
 
         if (freelance.freelancer != @0x0 && freelance.workSubmitted == false && freelance.dispute == false) {
@@ -80,7 +85,7 @@ module smile::freelance {
     ) {
         let recipient = tx_context::sender(ctx);
         assert!(
-            freelance.freelancer != recipient,
+            freelance.freelancer == recipient,
             ENotFreelancer
         );
         let take_coin = sui::coin::take(&mut freelance.escrow, amount, ctx);
@@ -197,11 +202,11 @@ module smile::freelance {
         ctx: &TxContext
     ) {
         assert!(
-            freelance.client != ctx.sender(),
+            freelance.client == ctx.sender(),
             ENotFreelancer
         );
         assert!(
-            freelance.freelancer != ctx.sender(),
+            freelance.freelancer == ctx.sender(),
             EInvalidWork
         );
     }

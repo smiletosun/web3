@@ -94,7 +94,7 @@ module smile::coffe {
         ctx: &mut TxContext
     ) {
         assert!(
-            !cafe.member_card.contains(card.id.uid_to_inner()),
+            cafe.member_card.contains(card.id.uid_to_inner()),
             ECardNotFound
         );
 
